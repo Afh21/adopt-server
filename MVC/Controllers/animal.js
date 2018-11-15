@@ -5,7 +5,7 @@ const Moment = require("moment");
 module.exports = {
   getAnimal: async (req, res) => {
     try {
-      const animals = await Animal.find({});
+      const animals = await Animal.find({}).populate("rh breed");
       return res.status(200).json({
         ok: true,
         message: "Congrats! Animals list - GET",
@@ -39,6 +39,10 @@ module.exports = {
         const now = Moment(Date.now());
         const born = Moment(new Date(body.born));
         newAnimal.age = parseFloat(now.diff(born, "years", true).toFixed(1));
+      }
+
+      if (!body.image) {
+        newAnimal.image = null;
       }
 
       await newAnimal
@@ -125,5 +129,3 @@ module.exports = {
     }
   }
 };
-
-

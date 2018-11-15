@@ -21,8 +21,6 @@ module.exports = function validateAnimal(data) {
     errors.animal = "**Animal field is required";
   }
 
-  /*
-
   if (validator.isEmpty(data.rh)) {
     errors.rh = "**Rh field is required";
   }
@@ -30,7 +28,6 @@ module.exports = function validateAnimal(data) {
   if (validator.isEmpty(data.breed)) {
     errors.breed = "**Breed field is required";
   }
-  */
 
   if (validator.isEmpty(data.genre)) {
     errors.genre = "**Genre field is required";

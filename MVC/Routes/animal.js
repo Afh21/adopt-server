@@ -3,18 +3,13 @@ const passport = require("passport");
 const middleware = require("../../config/validations/middleware/permission");
 
 const {
-  createAnimal,
   getAnimal,
+  createAnimal,
   updateAnimal,
   deleteAnimal
 } = require("../Controllers/animal");
 
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  middleware.verifyRol,
-  getAnimal
-);
+router.get("/", passport.authenticate("jwt", { session: false }), getAnimal);
 
 router.post(
   "/create",

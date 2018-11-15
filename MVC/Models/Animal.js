@@ -36,7 +36,7 @@ var animalSchema = new Schema({
     type: String
   }, // Gris
   height: {
-    type: Number,
+    type: String,
     required: true
   }, // 20
   typeHeight: {
@@ -44,7 +44,7 @@ var animalSchema = new Schema({
     default: "cm"
   }, // cm
   weight: {
-    type: Number,
+    type: String,
     required: true
   }, // 2
   typeWeight: {
@@ -59,6 +59,7 @@ var animalSchema = new Schema({
   }, // 6 months
   state: {
     type: String,
+    enum: ["healthy", "sick"],
     required: true
   }, // Enfermo, Saludable
   status: {

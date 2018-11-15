@@ -7,10 +7,11 @@ const passport = require("passport");
 
 // Routes
 const auth = require("./MVC/Routes/auth/auth");
-const type_animal = require("./MVC/Routes/master/type-animal");
+// const type_animal = require("./MVC/Routes/master/type-animal");
 const type_breed = require("./MVC/Routes/master/type-breed");
 const type_rh = require("./MVC/Routes/master/type-rh");
 const animal = require("./MVC/Routes/animal");
+const user = require("./MVC/Routes/users");
 
 const adoption = require("./MVC/Routes/adoption");
 
@@ -37,11 +38,11 @@ require("./config/passport")(passport);
 
 // Routes
 app.use("/adoption/request", adoption);
-
+app.use("/master/users", user);
 app.use("/master/animal", animal);
 app.use("/master/detail/rh", type_rh);
 app.use("/master/detail/breed", type_breed);
-app.use("/master/detail/animal", type_animal);
+// app.use("/master/detail/animal", type_animal);
 app.use("/auth", auth); // Register & Login
 
 const port = process.env.PORT || 5000;
