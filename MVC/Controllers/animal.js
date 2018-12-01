@@ -5,10 +5,30 @@ const Moment = require("moment");
 module.exports = {
   getAnimal: async (req, res) => {
     try {
-      const animals = await Animal.find({}).populate("rh breed");
+      const animals = await Animal.find({ status: "enabled" }).populate(
+        "rh breed"
+      );
       return res.status(200).json({
         ok: true,
         message: "Congrats! Animals list - GET",
+        data: animals
+      });
+    } catch (error) {
+      return res.status(500).json({
+        ok: true,
+        message: "Ups! Something happened at list",
+        errors: error
+      });
+    }
+  },
+
+  getProfileAnimal: async (req, res) => {
+    try {
+      const { animalId } = req.params;
+      const animals = await Animal.find({ _id: animalId });
+      return res.status(200).json({
+        ok: true,
+        message: "Congrats! Animals Profile - GET",
         data: animals
       });
     } catch (error) {
@@ -84,7 +104,14 @@ module.exports = {
         });
       }
 
-      const animal = await Animal.findOneAndUpdate({ _id: animalId }, body)
+      if (body.born) {
+        const now = Moment(Date.now());
+        const born = Moment(new Date(body.born));
+        body.born = born;
+        body.age = parseFloat(now.diff(born, "years", true).toFixed(1));
+      }
+
+      await Animal.findOneAndUpdate({ _id: animalId }, body)
         .then(animalUpdated => {
           return res.status(200).json({
             ok: true,

@@ -6,13 +6,13 @@ module.exports = {
   createAdoption: async (req, res) => {
     try {
       const { id } = req.user;
-      const body = req.body;
+      const { animal } = req.query;
 
       const query = await Adoption.find({}).exec();
       let valid = false;
 
       query.map(animal => {
-        if (animal.animal.toString() === body.animal.toString()) {
+        if (animal.animal.toString() === animal.toString()) {
           valid = true;
         }
         return valid;
@@ -24,7 +24,7 @@ module.exports = {
 
       const adoptionCreated = new Adoption({
         user: id,
-        animal: body.animal
+        animal: animal
       });
 
       return adoptionCreated
@@ -39,7 +39,7 @@ module.exports = {
         .then(() => {
           let updateStatusAnimal = { status: "pending" };
           Animal.findOneAndUpdate(
-            { _id: body.animal.toString() },
+            { _id: animal.toString() },
             { $set: updateStatusAnimal }
           )
             .then(animalUpdate => {
@@ -58,14 +58,17 @@ module.exports = {
 
   cancelAdoption: async (req, res) => {
     try {
-      const { _id } = req.user;
+      const { _id, rol } = req.user;
       const { adoptionId } = req.params;
 
       await Adoption.findOne({ _id: adoptionId.toString() })
         .then(adoption => {
           // console.log("adopt ", adoption);
 
-          if (adoption.user.toString() === _id.toString()) {
+          if (
+            adoption.user.toString() === _id.toString() ||
+            rol === "administrator"
+          ) {
             adoption.remove();
 
             let updateAnimalStatus = { status: "enabled" };

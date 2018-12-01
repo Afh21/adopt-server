@@ -47,6 +47,7 @@ module.exports = {
           lastname: req.body.lastname,
           identity: req.body.identity,
           phone: req.body.phone,
+          address: req.body.address,
           email: req.body.email,
           avatar,
           password: req.body.password,
@@ -107,40 +108,47 @@ module.exports = {
       }
 
       // Check Password
-      bcrypt.compare(password, user.password).then(isMatch => {
-        if (isMatch) {
-          // User Matched
-          const payload = {
-            id: user.id,
-            name: user.name,
-            lastname: user.lastname,
-            rol: user.rol,
-            avatar: user.avatar
-          }; // Create JWT Payload
+      bcrypt
+        .compare(password, user.password)
+        .then(isMatch => {
+          if (isMatch) {
+            // User Matched
+            const payload = {
+              id: user.id,
+              name: user.name,
+              lastname: user.lastname,
+              identity: user.identity,
+              phone: user.phone,
+              address: user.address,
+              email: user.email,
+              rol: user.rol,
+              avatar: user.avatar
+            }; // Create JWT Payload
 
-          // Sign Token
-          jwt.sign(
-            payload,
-            keys.secretJwt,
-            { expiresIn: 7200 },
-            (err, token) => {
-              res.json({
-                message: "Token generate successfully",
-                ok: true,
-                token: "Bearer " + token,
-                errors: errors
-              });
-            }
-          );
-        } else {
-          errors.password = "Password Incorrect";
-          return res.status(400).json({
-            message: "Ups! Password incorrect.",
-            ok: false,
-            errors: errors
-          });
-        }
-      });
+            // Sign Token
+            jwt.sign(
+              payload,
+              keys.secretJwt,
+              { expiresIn: 7200 },
+              (err, token) => {
+                res.json({
+                  message: "Token generate successfully",
+                  ok: true,
+                  token: "Bearer " + token,
+                  errors: errors
+                });
+              }
+            );
+          } else {
+            errors.password = "Password Incorrect";
+            return res.status(400).json({
+              message: "Ups! Password incorrect.",
+              ok: false,
+              errors: errors
+            });
+          }
+        })
+        .catch(err => console.log(err));
     });
   }
 };

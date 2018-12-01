@@ -12,7 +12,7 @@ const type_breed = require("./MVC/Routes/master/type-breed");
 const type_rh = require("./MVC/Routes/master/type-rh");
 const animal = require("./MVC/Routes/animal");
 const user = require("./MVC/Routes/users");
-
+const dashboard = require("./MVC/Routes/dashboard");
 const adoption = require("./MVC/Routes/adoption");
 
 // Middleware's
@@ -37,6 +37,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 // Routes
+app.use("/dashboard/all", dashboard);
 app.use("/adoption/request", adoption);
 app.use("/master/users", user);
 app.use("/master/animal", animal);

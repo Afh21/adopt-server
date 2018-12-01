@@ -9,12 +9,7 @@ const {
   acceptAdoption
 } = require("../Controllers/adoptions");
 
-router.get(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  middleware.verifyRol,
-  getAdoptions
-);
+// GUEST
 
 router.post(
   "/adoption",
@@ -26,6 +21,15 @@ router.delete(
   "/adoption/:adoptionId",
   passport.authenticate("jwt", { session: false }),
   cancelAdoption
+);
+
+// ADMINISTRATORS
+
+router.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  middleware.verifyRol,
+  getAdoptions
 );
 
 router.post(

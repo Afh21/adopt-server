@@ -6,7 +6,8 @@ const {
   getAnimal,
   createAnimal,
   updateAnimal,
-  deleteAnimal
+  deleteAnimal,
+  getProfileAnimal
 } = require("../Controllers/animal");
 
 router.get("/", passport.authenticate("jwt", { session: false }), getAnimal);
@@ -23,6 +24,13 @@ router.put(
   passport.authenticate("jwt", { session: false }),
   middleware.verifyRol,
   updateAnimal
+);
+
+router.get(
+  "/:animalId",
+  passport.authenticate("jwt", { session: false }),
+  middleware.verifyRol,
+  getProfileAnimal
 );
 
 router.delete(
