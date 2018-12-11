@@ -47,6 +47,7 @@ module.exports = {
           lastname: req.body.lastname,
           identity: req.body.identity,
           phone: req.body.phone,
+          coords: req.body.coords,
           address: req.body.address,
           email: req.body.email,
           avatar,

@@ -5,19 +5,33 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   lastname: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   identity: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
+  },
+  coords: {
+    lat: {
+      type: Schema.Types.Decimal128,
+      required: true
+    },
+    lng: {
+      type: Schema.Types.Decimal128,
+      required: true
+    }
   },
   address: {
-    type: String
+    type: String,
+    trim: true
   },
   phone: {
     type: String,
@@ -26,7 +40,8 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    trim: true
   },
   password: {
     type: String,

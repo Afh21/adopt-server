@@ -7,7 +7,8 @@ const typeBreed = require("./master-detail/type-breed");
 var animalSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   }, // Max
   animal: {
     type: String,
@@ -33,11 +34,13 @@ var animalSchema = new Schema({
     type: String
   },
   color: {
-    type: String
+    type: String,
+    trim: true
   }, // Gris
   height: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   }, // 20
   typeHeight: {
     type: String,
@@ -45,7 +48,8 @@ var animalSchema = new Schema({
   }, // cm
   weight: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   }, // 2
   typeWeight: {
     type: String,

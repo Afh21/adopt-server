@@ -22,6 +22,29 @@ module.exports = {
     }
   },
 
+  getListAnimalsAdoptedAndPending: async (req, res) => {
+    try {
+      const animals = await Animal.find({})
+        .populate("breed rh")
+        .exec();
+      const list = animals.filter(currentValue => {
+        return currentValue.status !== "enabled";
+      });
+
+      return res.status(200).json({
+        ok: true,
+        message: "Congrats! Animals List - GET",
+        data: list
+      });
+    } catch (error) {
+      return res.status(500).json({
+        ok: false,
+        message: "Ups! Something happened at list",
+        errors: error
+      });
+    }
+  },
+
   getProfileAnimal: async (req, res) => {
     try {
       const { animalId } = req.params;
@@ -133,6 +156,14 @@ module.exports = {
         errors: err
       });
     }
+  },
+
+  updatePhotoByAnimal: async (req, res) => {
+    const { animalId } = req.params;
+    const body = req.body;
+    const rest = req.headers;
+
+    console.log(body);
   },
 
   deleteAnimal: async (req, res) => {

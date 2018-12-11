@@ -7,7 +7,9 @@ const {
   createAnimal,
   updateAnimal,
   deleteAnimal,
-  getProfileAnimal
+  getProfileAnimal,
+  getListAnimalsAdoptedAndPending,
+  updatePhotoByAnimal
 } = require("../Controllers/animal");
 
 router.get("/", passport.authenticate("jwt", { session: false }), getAnimal);
@@ -17,6 +19,13 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   middleware.verifyRol,
   createAnimal
+);
+
+router.post(
+  "/update/photo/:animalId",
+  // passport.authenticate("jwt", { session: false }),
+  // middleware.verifyRol,
+  updatePhotoByAnimal
 );
 
 router.put(
@@ -31,6 +40,13 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   middleware.verifyRol,
   getProfileAnimal
+);
+
+router.get(
+  "/other/animals",
+  passport.authenticate("jwt", { session: false }),
+  middleware.verifyRol,
+  getListAnimalsAdoptedAndPending
 );
 
 router.delete(

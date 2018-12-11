@@ -4,7 +4,9 @@ const Schema = mongoose.Schema;
 const type_breeds_Schema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true,
+    trim: true
   }
 });
 

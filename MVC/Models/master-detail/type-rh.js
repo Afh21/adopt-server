@@ -4,7 +4,9 @@ var Schema = mongoose.Schema;
 var TypeRhSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
+    uppercase: true,
+    trim: true
   }
 });
 
