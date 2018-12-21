@@ -28,7 +28,7 @@ router.delete(
 router.get(
   "/",
   passport.authenticate("jwt", { session: false }),
-  middleware.verifyRol,
+  // middleware.verifyRol,   -> Comentado para prueba en el caso de ver adopciones en el mapa.
   getAdoptions
 );
 

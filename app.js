@@ -17,6 +17,11 @@ const adoption = require("./MVC/Routes/adoption");
 
 // Middleware's
 const app = express();
+
+// Set folder public
+app.use(express.static("public"));
+app.use("/uploads", express.static(__dirname + "public"));
+
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

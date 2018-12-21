@@ -121,6 +121,7 @@ module.exports = {
               identity: user.identity,
               phone: user.phone,
               address: user.address,
+              coords: user.coords,
               email: user.email,
               rol: user.rol,
               avatar: user.avatar

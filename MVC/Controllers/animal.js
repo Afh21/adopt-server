@@ -1,6 +1,8 @@
 const Animal = require("../Models/Animal");
 const validateAnimal = require("../../config/validations/animal");
 const Moment = require("moment");
+const multer = require("multer");
+const path = require("path");
 
 module.exports = {
   getAnimal: async (req, res) => {
@@ -160,10 +162,35 @@ module.exports = {
 
   updatePhotoByAnimal: async (req, res) => {
     const { animalId } = req.params;
-    const body = req.body;
-    const rest = req.headers;
 
-    console.log(body);
+    const storage = multer.diskStorage({
+      destination: "./public/uploads/",
+      filename: function(req, file, cb) {
+        cb(null, "adoption-" + Date.now() + path.extname(file.originalname));
+      }
+    });
+
+    const upload = multer({
+      storage: storage,
+      limits: { fileSize: 1000000 }
+    }).single("photo");
+
+    upload(req, res, err => {
+      if (!err) {
+        const pathImage = req.file.path.replace("public", "");
+        const pathNew = pathImage.replace("\\", "/");
+
+        Animal.findOneAndUpdate(
+          { _id: animalId },
+          { image: pathNew },
+          { new: true }
+        ).then(() => {
+          return res.status(200).json({
+            message: "Image upload successfully"
+          });
+        });
+      }
+    });
   },
 
   deleteAnimal: async (req, res) => {
